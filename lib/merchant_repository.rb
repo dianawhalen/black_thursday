@@ -11,12 +11,6 @@ class MerchantRepository
     merchant_maker
   end
 
-  def find_by_name(name)
-    @all.find do |merchant|
-      merchant.name == name
-    end
-
-  end
 
   def csv_loader(path)
     @csv = CSV.open(path, headers:true, header_converters: :symbol)
@@ -27,6 +21,24 @@ class MerchantRepository
       Merchant.new(row, self)
     end
     # binding.pry
+  end
+
+  def find_by_name(name)
+    @all.find do |merchant|
+      merchant.name == name
+    end
+  end
+
+  def find_by_id(id)
+    @all.find do |merchant|
+      merchant.id.to_i == id.to_i
+    end
+  end
+
+  def find_all_by_name(name_fragment)
+    @all.find_all do |merchant|
+      merchant.include?(name_fragment)
+    end
   end
 
 end

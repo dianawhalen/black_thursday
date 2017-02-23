@@ -1,0 +1,37 @@
+{
+  "Unit Tests": {
+    "coverage": {
+      "/Users/jonathank/turing/1module/black_thursday/lib/merchant_repository.rb": [
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        null,
+        null,
+        null
+      ],
+      "/Users/jonathank/turing/1module/black_thursday/lib/sales_engine.rb": [
+        1,
+        1,
+        1,
+        null,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        null,
+        null,
+        null
+      ],
+      "/Users/jonathank/turing/1module/black_thursday/lib/merchant.rb": [
+        1,
+        null
+      ]
+    },
+    "timestamp": 1487809391
+  }
+}

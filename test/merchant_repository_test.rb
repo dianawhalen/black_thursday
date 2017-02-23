@@ -13,15 +13,22 @@ class MerchantRepositoryTest < Minitest::Test
     @mr = @se.merchants
   end
 
+  def test_it_can_load_csv
+    skip
+    assert_instance_of CSV
+  end
+
   def test_it_can_find_merchant_by_name
-    assert_instance_of Merchant, @mr.find_by_name("CJsDecor")
+    merchant = @mr.find_by_name("CJsDecor")
+    assert_instance_of Merchant, merchant
   end
 
   def test_it_can_create_instance_of_merchant
-    assert_instance_of Merchant
+    skip
+    assert_equal Merchant, @mr.all
   end
 
   def test_it_can_return_array_of_all_known_merchant_instances
-    assert
+    assert_instance_of Array, @mr.all
   end
 end

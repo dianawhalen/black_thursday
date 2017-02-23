@@ -1,3 +1,7 @@
+require 'csv'
+require 'pry'
+require_relative '../lib/merchant'
+
 class MerchantRepository
   attr_reader :all
   def initialize(path)
@@ -8,6 +12,9 @@ class MerchantRepository
   end
 
   def find_by_name(name)
+    @all.find do |merchant|
+      merchant.name == name
+    end
 
   end
 
@@ -19,6 +26,7 @@ class MerchantRepository
     @all = @csv.map do |row|
       Merchant.new(row, self)
     end
+    # binding.pry
   end
 
 end

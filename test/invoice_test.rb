@@ -51,4 +51,17 @@ class InvoiceTest < Minitest::Test
   def test_it_returns_instance_of_time_for_date_invoice_was_last_modified
     assert_instance_of Time, @iv.updated_at
   end
+
+  def test_it_can_return_true_if_the_invoice_is_paid_in_full
+    invoice = @se.invoices.find_by_id(26)
+    assert invoice.is_paid_in_full?
+
+    invoice = @se.invoices.find_by_id(25)
+    refute invoice.is_paid_in_full?
+  end
+
+  def test_it_returns_paid_in_full_invoice_totals
+    invoice = @se.invoices.find_by_id(26)
+    assert_equal 18948.91, invoice.total
+  end
 end

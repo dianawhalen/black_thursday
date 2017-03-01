@@ -22,6 +22,6 @@ class Transaction
   end
 
   def invoice
-    parent.engine.invoice.find_by_id(invoice_id)
+    parent.engine.invoices.find_by_id(invoice_id)
   end
 end

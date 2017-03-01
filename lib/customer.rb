@@ -17,7 +17,18 @@ class Customer
     @parent = parent
   end
 
-  def merchants #need longer method to traverse and match correct data
-    parent.engine.invoices.find_all_by_merchant_id(merchant_id)
+  def invoices
+    parent.engine.invoices.find_all_by_customer_id(id)
   end
+
+  def merchants
+    merchant_ids = self.invoices.map do |invoice|
+      invoice.merchant_id
+    end
+
+    merchant_ids.map do |merchant_id|
+      parent.engine.merchants.find_by_id(merchant_id)
+    end.uniq
+  end
+
 end

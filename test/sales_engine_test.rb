@@ -80,4 +80,24 @@ class SalesEngineTest < Minitest::Test
 
     assert_instance_of Customer, invoice.customer
   end
+
+  def test_it_can_find_invoice_of_transaction
+    transaction = @se.transactions.find_by_id(941)
+
+    assert_instance_of Invoice, transaction.invoice
+  end
+
+  def test_it_can_return_array_of_customers_for_merchant
+    merchant = @se.merchants.find_by_id(12334115)
+
+    assert_instance_of Array, merchant.customers
+    assert_instance_of Customer, merchant.customers.first
+  end
+
+  def test_it_can_return_array_of_merchants_for_customer
+    customer = @se.customers.find_by_id(78)
+
+    assert_instance_of Array, customer.merchants
+    assert_instance_of Merchant, customer.merchants.first
+  end
 end

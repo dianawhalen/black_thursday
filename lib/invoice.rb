@@ -9,7 +9,7 @@ class Invoice
               :updated_at,
               :parent
 
-  def initialize(row, parent)
+  def initialize(row, parent = nil)
     @id = row[:id].to_i
     @customer_id = row[:customer_id].to_i
     @merchant_id = row[:merchant_id].to_i
@@ -42,5 +42,18 @@ class Invoice
 
   def customer
     parent.engine.customers.find_by_id(customer_id)
+  end
+
+  def is_paid_in_full?
+    transactions.any? { |transaction| transaction.result == "success" }
+  end
+
+  def total
+    if is_paid_in_full?
+      invoice_item = parent.engine.invoice_items.find_all_by_invoice_id(id)
+      invoice_item.inject(0) do |total, item|
+        total += item.unit_price * item.quantity
+      end
+    end
   end
 end

@@ -19,7 +19,7 @@ class InvoiceItemRepository
 
   def find_by_id(id)
     all.find do |invoice_item|
-      invoice_item.id.to_i == invoice_item.id.to_i
+      invoice_item.id.to_i == id.to_i
     end
   end
 
@@ -36,7 +36,7 @@ class InvoiceItemRepository
   end
 
   def inspect
-    "#<#{self.class} #{@merchants.size} rows>"
+    # "#<#{self.class} #{@merchants.size} rows>"
   end
 
 end

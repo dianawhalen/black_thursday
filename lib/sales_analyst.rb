@@ -1,6 +1,6 @@
 class SalesAnalyst
   attr_reader :engine
-  
+
   def initialize(engine)
     @engine = engine
   end
@@ -147,6 +147,13 @@ class SalesAnalyst
 
   def invoice_status(status)
     ((invoice_statuses_count(status).to_f/invoices_count) * 100).round(2)
+  end
+
+  def total_revenue_by_date(date)
+    invoice_date = engine.invoices.find_all_by_date(date)
+    invoice_date.reduce(0) do |x, invoice|
+      x + invoice.total
+    end
   end
 
 end

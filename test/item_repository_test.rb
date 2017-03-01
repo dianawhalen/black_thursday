@@ -104,4 +104,5 @@ class ItemRepositoryTest < Minitest::Test
     item = @ir.find_all_by_merchant_id(90907653)
     assert_equal [], item
   end
+
 end

@@ -139,4 +139,8 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 13.5, @sa.invoice_status(:returned)
   end
 
+  def test_it_returns_total_revenue_by_date
+    assert_instance_of BigDecimal, @sa.total_revenue_by_date(Time.parse("2008-08-28"))
+  end
+
 end

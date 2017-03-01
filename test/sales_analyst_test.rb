@@ -143,4 +143,9 @@ class SalesAnalystTest < Minitest::Test
     assert_instance_of BigDecimal, @sa.total_revenue_by_date(Time.parse("2008-08-28"))
   end
 
+  def test_top_revenue_earners_returns_array_of_merchants
+    assert_instance_of Array, @sa.top_revenue_earners
+    assert_equal 20, @sa.top_revenue_earners(20)
+  end
+
 end

@@ -8,7 +8,7 @@ class Customer
               :updated_at,
               :parent
 
-  def initialize(row, parent)
+  def initialize(row, parent = nil)
     @id = row[:id].to_i
     @first_name = row[:first_name]
     @last_name = row[:last_name]

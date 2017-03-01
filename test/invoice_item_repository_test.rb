@@ -41,7 +41,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
   end
 
   def test_it_returns_nil_if_no_invoice_item_id_exists
-    invoice_item = @iir.find_by_id(0)
+    invoice_item = @iir.find_by_id(93934483883848484843399)
     assert_nil invoice_item
   end
 

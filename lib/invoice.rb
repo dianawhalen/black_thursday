@@ -52,7 +52,7 @@ class Invoice
     if is_paid_in_full?
       invoice_item = parent.engine.invoice_items.find_all_by_invoice_id(id)
       invoice_item.inject(0) do |total, item|
-        total += item.unit_price_to_dollars * item.quantity
+        total += item.unit_price * item.quantity
       end
     end
   end

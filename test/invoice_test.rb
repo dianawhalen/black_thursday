@@ -70,4 +70,10 @@ class InvoiceTest < Minitest::Test
 
     assert_equal 0, invoice.total
   end
+
+  def test_invoice_items_returns_invoice_item
+    invoice = @se.invoices.find_by_id(26)
+
+    assert_instance_of InvoiceItem, invoice.invoice_items.first
+  end
 end

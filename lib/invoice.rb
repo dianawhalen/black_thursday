@@ -75,4 +75,8 @@ class Invoice
     #   false
     # end
   end
+
+  def invoice_items
+    parent.engine.invoice_items.find_all_by_invoice_id(id)
+  end
 end

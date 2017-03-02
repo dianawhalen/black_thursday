@@ -159,7 +159,7 @@ class SalesAnalyst
     top_earners = sorted_merchs.last(x).reverse
   end
 
-  def merchants_with_pending_invoices # an invoice is considered pending if none of its transactions are successful
+  def merchants_with_pending_invoices
     # pending_invoices = engine.invoices.find_all_by_status(:pending)
     # b = pending_invoices.map do |invoice|
     #   engine.merchants.find_by_id(invoice.merchant_id)
@@ -182,6 +182,22 @@ class SalesAnalyst
   def revenue_by_merchant(merchant_id)
     uniq_merchant = engine.merchants.find_by_id(merchant_id)
     uniq_merchant.revenue
+  end
+
+  def most_sold_item_for_merchant(merchant_id)
+    merchant = engine.merchants.find_by_id(merchant_id)
+    invoices = merchant.invoices.find_all {|invoice| invoice.is_paid_in_full?}
+    inv_items = invoices.map {|invoice| invoice.invoice_items}.flatten
+    items = inv_items.group_by {|item| item.item_id}
+    summed = Hash.new(0)
+    items.each do |k,v|
+      summed[k] = v.reduce(0) {|total, x| total += x.quantity}
+    end
+    top_seller = summed.values.max
+    b = summed.select {|k,v| k if v == top_seller}
+    b.keys.map do |key|
+      engine.items.all.find {|item| item.id == key}
+    end
   end
 
 end

@@ -164,4 +164,10 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 86753, @sa.revenue_by_merchant(12334141).to_i
   end
 
+  def test_returns_array_of_most_sold_items_for_given_merchant
+    assert_instance_of Array, @sa.most_sold_item_for_merchant(12334141)
+    assert_equal 4, @sa.most_sold_item_for_merchant(12334141).count
+  end
+
+
 end

@@ -173,6 +173,12 @@ class SalesAnalyst
     pending_merchants
   end
 
+  def merchants_with_only_one_item
+    engine.merchants.all.find_all do |merchant|
+      merchant.items.length == 1
+    end
+  end
+
   def merchants_with_only_one_item_registered_in_month(month)
     engine.merchants.all.find_all do |merchant|
       merchant.created_at.strftime("%B") == month && merchant.items.length == 1
@@ -182,6 +188,10 @@ class SalesAnalyst
   def revenue_by_merchant(merchant_id)
     uniq_merchant = engine.merchants.find_by_id(merchant_id)
     uniq_merchant.revenue
+  end
+
+  def merchants_ranked_by_revenue
+    engine.merchants.all.sort_by {|merchant| merchant.revenue}
   end
 
   def most_sold_item_for_merchant(merchant_id)

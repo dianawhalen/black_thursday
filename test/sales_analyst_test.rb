@@ -150,4 +150,9 @@ class SalesAnalystTest < Minitest::Test
     assert_equal "jejum", @sa.top_revenue_earners.first.name
   end
 
+  def test_returns_merchants_with_pending_invoices
+    assert_instance_of Array, @sa.merchants_with_pending_invoices
+    assert_equal 448, @sa.merchants_with_pending_invoices.count
+  end
+
 end

@@ -200,4 +200,17 @@ class SalesAnalyst
     end
   end
 
+  def best_item_for_merchant(merchant_id)
+    merchant = engine.merchants.find_by_id(merchant_id)
+    invoices = merchant.invoices.find_all {|invoice| invoice.is_paid_in_full?}
+    inv_items = invoices.map {|invoice| invoice.invoice_items}.flatten
+    items = inv_items.group_by {|item| item.item_id}
+    summed = Hash.new(0)
+    items.each do |k,v|
+      summed[k] = v.reduce(0) {|total, x| total += x.unit_price}
+    end
+    max = summed.values.max
+    b = summed.select {|k,v| v == max}
+    engine.items.all.find {|item| b.keys.first == item.id}
+  end
 end

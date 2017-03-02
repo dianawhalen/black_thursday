@@ -169,5 +169,10 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 4, @sa.most_sold_item_for_merchant(12334141).count
   end
 
+  def test_returns_best_item_for_merchant_by_revenue
+    assert_instance_of Item, @sa.best_item_for_merchant(12334141)
+    assert_equal "Cutting Board", @sa.best_item_for_merchant(12334141).name
+  end
+
 
 end

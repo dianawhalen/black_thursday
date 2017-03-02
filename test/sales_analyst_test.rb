@@ -139,4 +139,40 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 13.5, @sa.invoice_status(:returned)
   end
 
+  def test_it_returns_total_revenue_by_date
+    assert_instance_of BigDecimal, @sa.total_revenue_by_date(Time.parse("2008-08-28"))
+  end
+
+  def test_top_revenue_earners_returns_array_of_merchants
+    assert_equal 20, @sa.top_revenue_earners.count
+    assert_equal 15, @sa.top_revenue_earners(15).count
+    assert_instance_of Merchant, @sa.top_revenue_earners.first
+    assert_equal "jejum", @sa.top_revenue_earners.first.name
+  end
+
+  def test_returns_merchants_with_pending_invoices
+    assert_instance_of Array, @sa.merchants_with_pending_invoices
+    assert_equal 475, @sa.merchants_with_pending_invoices.count
+  end
+
+  def test_merchants_with_only_one_item_registered_in_month
+    assert_instance_of Array, @sa.merchants_with_only_one_item_registered_in_month("December")
+    assert_equal 15, @sa.merchants_with_only_one_item_registered_in_month("December").count
+  end
+
+  def test_returns_total_revenue_for_given_merchant
+    assert_equal 86753, @sa.revenue_by_merchant(12334141).to_i
+  end
+
+  def test_returns_array_of_most_sold_items_for_given_merchant
+    assert_instance_of Array, @sa.most_sold_item_for_merchant(12334141)
+    assert_equal 4, @sa.most_sold_item_for_merchant(12334141).count
+  end
+
+  def test_returns_best_item_for_merchant_by_revenue
+    assert_instance_of Item, @sa.best_item_for_merchant(12334141)
+    assert_equal "Cutting Board", @sa.best_item_for_merchant(12334141).name
+  end
+
+
 end

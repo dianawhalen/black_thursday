@@ -71,4 +71,11 @@ class InvoiceRepositoryTest < Minitest::Test
     invoice = @ivr.find_all_by_status("canceled")
     assert_equal [], invoice
   end
+
+  def test_find_all_by_date_returns_array_of_invoices
+    invoice = @ivr.find_all_by_date(Time.parse("2008-08-28"))
+
+    assert_instance_of Invoice, invoice.first
+    assert_equal 1, invoice.count
+  end
 end

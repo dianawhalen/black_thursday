@@ -14,7 +14,8 @@ class MerchantTest < Minitest::Test
       :transactions  => "./data/transactions.csv"
       })
 
-    @m = Merchant.new({:id => "5", :name => "Turing School"
+    @m = Merchant.new({:id => "5",
+      :name => "Turing School", :created_at  => "2003-09-10"
       }, @se.merchants)
   end
 
@@ -33,5 +34,10 @@ class MerchantTest < Minitest::Test
 
   def test_it_has_name
     assert_equal "Turing School", @m.name
+  end
+
+  def test_returns_revenue_for_merchant
+    merchant = @se.merchants.find_by_id(12334132)
+    assert_equal 102699, merchant.revenue.to_i
   end
 end

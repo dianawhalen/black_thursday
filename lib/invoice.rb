@@ -45,6 +45,7 @@ class Invoice
   end
 
   def is_paid_in_full?
+    return false if transactions.empty?
     transactions.any? { |transaction| transaction.result == "success" }
   end
 
@@ -54,6 +55,29 @@ class Invoice
       invoice_item.inject(0) do |total, item|
         total += item.unit_price * item.quantity
       end
+    else
+      0
     end
+  end
+
+  def pending?
+    status = transactions.none? {|transaction| transaction.result == "success"}
+    case status
+    when true
+      true
+    when false
+      false
+    end
+    # if status == true
+    #   true
+    # elsif transactions.length == 0
+    #   false
+    # else
+    #   false
+    # end
+  end
+
+  def invoice_items
+    parent.engine.invoice_items.find_all_by_invoice_id(id)
   end
 end

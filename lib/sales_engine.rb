@@ -21,16 +21,16 @@ class SalesEngine
               :transactions,
               :customers
 
-  def initialize(files_to_be_loaded)
-    @merchants ||= MerchantRepository.new(files_to_be_loaded[:merchants], self)
-    @items ||= ItemRepository.new(files_to_be_loaded[:items], self)
-    @invoices ||= InvoiceRepository.new(files_to_be_loaded[:invoices], self)
-    @invoice_items ||= InvoiceItemRepository.new(files_to_be_loaded[:invoice_items], self)
-    @transactions ||= TransactionRepository.new(files_to_be_loaded[:transactions], self)
-    @customers ||= CustomerRepository.new(files_to_be_loaded[:customers], self)
+  def initialize(data)
+    @merchants ||= MerchantRepository.new(data[:merchants], self)
+    @items ||= ItemRepository.new(data[:items], self)
+    @invoices ||= InvoiceRepository.new(data[:invoices], self)
+    @invoice_items ||= InvoiceItemRepository.new(data[:invoice_items], self)
+    @transactions ||= TransactionRepository.new(data[:transactions], self)
+    @customers ||= CustomerRepository.new(data[:customers], self)
   end
 
-  def self.from_csv(files_to_be_loaded)
-    SalesEngine.new(files_to_be_loaded)
+  def self.from_csv(data)
+    SalesEngine.new(data)
   end
 end

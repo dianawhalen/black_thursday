@@ -23,7 +23,7 @@ class TransactionTest < Minitest::Test
       :result      => "success",
       :created_at  => "2012-02-26 20:56:57 UTC",
       :updated_at  => "2012-02-26 20:56:57 UTC"
-      })
+      }, @se.transactions)
   end
 
   def test_it_exists
@@ -57,6 +57,9 @@ class TransactionTest < Minitest::Test
   def test_it_returns_instance_of_time_for_date_transaction_was_last_modified
     assert_instance_of Time, @t.updated_at
   end
-end
 
-# CHECK FORMAT OF RETURNED CREDIT CARD NUMBER WITHOUT TAB OR SPACE
+  def test_returns_invoice_by_id
+    assert_instance_of Invoice, @t.invoice
+    assert_equal :pending, @t.invoice.status
+  end
+end

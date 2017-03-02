@@ -25,7 +25,6 @@ class Customer
     merchant_ids = self.invoices.map do |invoice|
       invoice.merchant_id
     end
-
     merchant_ids.map do |merchant_id|
       parent.engine.merchants.find_by_id(merchant_id)
     end.uniq

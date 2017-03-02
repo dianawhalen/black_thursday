@@ -44,5 +44,4 @@ class CustomerTest < Minitest::Test
   def test_updated_at_is_a_time_instance
     assert_instance_of Time, @c.updated_at
   end
-
 end

@@ -4,6 +4,7 @@ require_relative '../lib/sales_engine'
 require_relative '../lib/merchant_repository'
 
 class MerchantTest < Minitest::Test
+
   def setup
     @se = SalesEngine.from_csv({
       :merchants => "./data/merchants.csv",
@@ -19,13 +20,12 @@ class MerchantTest < Minitest::Test
       }, @se.merchants)
   end
 
-  def test_assert_it_exists
+  def test_it_exists
     assert_instance_of Merchant, @m
   end
 
   def test_every_merchant_has_a_merchant_repo_parent
     assert @m.parent, @se.merchants
-
   end
 
   def test_it_has_id
@@ -34,6 +34,19 @@ class MerchantTest < Minitest::Test
 
   def test_it_has_name
     assert_equal "Turing School", @m.name
+  end
+
+  def test_it_can_return_all_items_by_merchant_id
+    assert_equal 0, @m.items.count
+  end
+
+  def test_it_can_return_all_invoices_by_merchant_id
+    assert_equal 0, @m.invoices.count
+  end
+
+  def test_it_can_return_array_of_customers
+    assert_instance_of Array, @m.customers
+    assert_equal 0, @m.customers.count
   end
 
   def test_returns_revenue_for_merchant

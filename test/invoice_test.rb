@@ -4,6 +4,7 @@ require_relative '../lib/sales_engine'
 require_relative '../lib/invoice_repository'
 
 class InvoiceTest < Minitest::Test
+
   def setup
     @se = SalesEngine.from_csv({
       :merchants => "./data/merchants.csv",
@@ -21,10 +22,10 @@ class InvoiceTest < Minitest::Test
       :status      => "shipped",
       :created_at  => "2003-09-10",
       :updated_at  => "2014-03-13"
-      })
+      }, @se.invoices)
   end
 
-  def test_assert_it_exists
+  def test_it_exists
     assert_instance_of Invoice, @iv
   end
 
@@ -52,6 +53,31 @@ class InvoiceTest < Minitest::Test
     assert_instance_of Time, @iv.updated_at
   end
 
+  def test_it_returns_merchant_by_merchant_id
+    assert_instance_of Merchant, @iv.merchant
+  end
+
+  def test_it_returns_array_of_all_invoice_ids_by_invoice_id
+    assert_instance_of Array, @iv.item_ids_by_invoice_id(397)
+    assert_equal 1, @iv.item_ids_by_invoice_id(397).count
+  end
+
+  def test_items_returns_array_of_items
+    assert_instance_of Array, @iv.items
+    assert_instance_of Item, @iv.items.first
+    assert_equal 1, @iv.items.count
+  end
+
+  def test_it_returns_array_of_transactions
+    assert_instance_of Array, @iv.transactions
+    assert_equal 0, @iv.transactions.count
+  end
+
+  def test_it_returns_customer_from_customer_id
+    assert_instance_of Customer, @iv.customer
+    assert_equal "Justyn", @iv.customer.first_name
+  end
+
   def test_it_can_return_true_if_the_invoice_is_paid_in_full
     invoice = @se.invoices.find_by_id(26)
     assert invoice.is_paid_in_full?
@@ -75,5 +101,21 @@ class InvoiceTest < Minitest::Test
     invoice = @se.invoices.find_by_id(26)
 
     assert_instance_of InvoiceItem, invoice.invoice_items.first
+  end
+
+  def test_pending_status_returns_true_and_false
+    invoice = @se.invoices.find_by_id(25)
+
+    assert invoice.pending?
+
+    invoice = @se.invoices.find_by_id(1)
+
+    refute invoice.pending?
+  end
+
+  def test_invoice_items_returns_array_of_invoice_items
+    assert_instance_of Array, @iv.invoice_items
+    assert_instance_of InvoiceItem, @iv.invoice_items.first
+    assert_equal 1, @iv.invoice_items.count
   end
 end

@@ -4,6 +4,7 @@ require './lib/sales_engine'
 require './lib/merchant'
 
 class MerchantRepositoryTest < Minitest::Test
+
   def setup
     @se = SalesEngine.from_csv({
       :merchants => "./test/fixtures/merchants_truncated.csv",

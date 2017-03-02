@@ -159,12 +159,29 @@ class SalesAnalyst
     top_earners = sorted_merchs.last(x).reverse
   end
 
-  def merchants_with_pending_invoices
-    pending_invoices = engine.invoices.find_all_by_status(:pending)
-    b = pending_invoices.map do |invoice|
-      engine.merchants.find_by_id(invoice.merchant_id)
+  def merchants_with_pending_invoices # an invoice is considered pending if none of its transactions are successful
+    # pending_invoices = engine.invoices.find_all_by_status(:pending)
+    # b = pending_invoices.map do |invoice|
+    #   engine.merchants.find_by_id(invoice.merchant_id)
+    # end
+    # b.uniq
+    pending_merchants = engine.merchants.all.find_all do |merchant|
+      merchant.invoices.any? do |invoice|
+        invoice.pending?
+      end
     end
-    b.uniq
+    pending_merchants
+  end
+
+  def merchants_with_only_one_item_registered_in_month(month)
+    engine.merchants.all.find_all do |merchant|
+      merchant.created_at.strftime("%B") == month && merchant.items.length == 1
+    end
+  end
+
+  def revenue_by_merchant(merchant_id)
+    uniq_merchant = engine.merchants.find_by_id(merchant_id)
+    uniq_merchant.revenue
   end
 
 end

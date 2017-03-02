@@ -152,7 +152,16 @@ class SalesAnalystTest < Minitest::Test
 
   def test_returns_merchants_with_pending_invoices
     assert_instance_of Array, @sa.merchants_with_pending_invoices
-    assert_equal 448, @sa.merchants_with_pending_invoices.count
+    assert_equal 475, @sa.merchants_with_pending_invoices.count
+  end
+
+  def test_merchants_with_only_one_item_registered_in_month
+    assert_instance_of Array, @sa.merchants_with_only_one_item_registered_in_month("December")
+    assert_equal 15, @sa.merchants_with_only_one_item_registered_in_month("December").count
+  end
+
+  def test_returns_total_revenue_for_given_merchant
+    assert_equal 86753, @sa.revenue_by_merchant(12334141).to_i
   end
 
 end

@@ -1,3 +1,5 @@
+require 'time'
+
 class Merchant
   attr_reader :id,
               :name,
@@ -8,7 +10,7 @@ class Merchant
   def initialize(row, parent)
     @id = row[:id].to_i
     @name = row[:name]
-    @created_at = row[:created_at]
+    @created_at = Time.parse(row[:created_at])
     @updated_at = row[:updated_at]
     @parent = parent
   end

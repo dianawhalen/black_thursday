@@ -14,7 +14,8 @@ class MerchantTest < Minitest::Test
       :transactions  => "./data/transactions.csv"
       })
 
-    @m = Merchant.new({:id => "5", :name => "Turing School"
+    @m = Merchant.new({:id => "5",
+      :name => "Turing School", :created_at  => "2003-09-10"
       }, @se.merchants)
   end
 

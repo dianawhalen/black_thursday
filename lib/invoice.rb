@@ -58,4 +58,21 @@ class Invoice
       0
     end
   end
+
+  def pending?
+    status = transactions.none? {|transaction| transaction.result == "success"}
+    case status
+    when true
+      true
+    when false
+      false
+    end
+    # if status == true
+    #   true
+    # elsif transactions.length == 0
+    #   false
+    # else
+    #   false
+    # end
+  end
 end

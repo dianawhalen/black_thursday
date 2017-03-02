@@ -4,6 +4,7 @@ require_relative '../lib/sales_engine'
 require_relative '../lib/item_repository'
 
 class ItemTest < Minitest::Test
+
   def setup
     @se = SalesEngine.from_csv({
       :merchants => "./data/merchants.csv",
@@ -15,31 +16,27 @@ class ItemTest < Minitest::Test
       })
 
     @i = Item.new({
+      :id          => 5,
       :name        => "Pencil",
       :description => "You can use it to write things",
       :unit_price  => BigDecimal.new(10.99,4),
       :created_at  => "2016-01-11 11:44:00 UTC",
-      :updated_at  => "2006-08-26 06:56:21 UTC"
+      :updated_at  => "2006-08-26 06:56:21 UTC",
+      :merchant_id => 12334145
       }, @se.items)
   end
 
-  def test_assert_it_exists
+  def test_it_exists
     assert_instance_of Item, @i
   end
 
   def test_every_item_has_a_item_repo_parent
     assert @i.parent, @se.items
-
   end
 
-  # def test_it_has_id
-  #   assert_equal 5, @i.id
-  # end
-
-  # def test_it_returns_integer_id_of_item
-  #   # method #id
-  #   # returns the integer id of the item
-  # end
+  def test_it_has_id
+    assert_equal 5, @i.id
+  end
 
   def test_it_returns_name_of_item
     assert_equal "Pencil", @i.name
@@ -57,6 +54,10 @@ class ItemTest < Minitest::Test
     assert_instance_of Float, @i.unit_price_to_dollars
   end
 
+  def test_it_returns_a_merchant_by_merchant_id
+    assert_instance_of Merchant, @i.merchant
+  end
+
   def test_it_returns_instance_of_time_for_date_item_was_first_created
     assert_instance_of Time, @i.created_at
   end
@@ -64,9 +65,4 @@ class ItemTest < Minitest::Test
   def test_it_returns_instance_of_time_for_date_item_was_last_modified
     assert_instance_of Time, @i.updated_at
   end
-
-  # def test_it_returns_integer_id_of_merchant_of_item
-  #   # method #merchant_id
-  #   # returns the integer merchant id of the item
-  # end
 end

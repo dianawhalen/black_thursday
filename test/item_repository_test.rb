@@ -4,6 +4,7 @@ require './lib/item_repository'
 require './lib/item'
 
 class ItemRepositoryTest < Minitest::Test
+
   def setup
     @se = SalesEngine.from_csv({
       :merchants => "./data/merchants.csv",
@@ -104,5 +105,4 @@ class ItemRepositoryTest < Minitest::Test
     item = @ir.find_all_by_merchant_id(90907653)
     assert_equal [], item
   end
-
 end

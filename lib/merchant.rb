@@ -25,10 +25,16 @@ class Merchant
     customer_ids = self.invoices.map do |invoice|
       invoice.customer_id
     end
-
     customer_ids.map do |customer_id|
       parent.engine.customers.find_by_id(customer_id)
     end.uniq
+  end
+
+  def revenue
+    invoices = parent.engine.invoices.find_all_by_merchant_id(id)
+    invoices.reduce(0) do |sum, invoice|
+      sum += invoice.total
+    end
   end
 
 end

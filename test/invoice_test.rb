@@ -64,4 +64,10 @@ class InvoiceTest < Minitest::Test
     invoice = @se.invoices.find_by_id(26)
     assert_equal 18948.91, invoice.total
   end
+
+  def test_total_method_handles_outstanding_invoice
+    invoice = @se.invoices.find_by_id(25)
+
+    assert_equal 0, invoice.total
+  end
 end

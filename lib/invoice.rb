@@ -54,6 +54,8 @@ class Invoice
       invoice_item.inject(0) do |total, item|
         total += item.unit_price * item.quantity
       end
+    else
+      0
     end
   end
 end

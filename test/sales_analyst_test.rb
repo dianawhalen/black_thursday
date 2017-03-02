@@ -144,8 +144,10 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_top_revenue_earners_returns_array_of_merchants
-    assert_instance_of Array, @sa.top_revenue_earners
-    assert_equal 20, @sa.top_revenue_earners(20)
+    assert_equal 20, @sa.top_revenue_earners.count
+    assert_equal 15, @sa.top_revenue_earners(15).count
+    assert_instance_of Merchant, @sa.top_revenue_earners.first
+    assert_equal "jejum", @sa.top_revenue_earners.first.name
   end
 
 end

@@ -156,4 +156,19 @@ class SalesAnalyst
     end
   end
 
+  def top_revenue_earners(x=20)
+    # merchant_revenues = Hash.new(0)
+    # engine.merchants.all.each do |merchant|
+    #   merchant_revenues[merchant.id] = merchant.revenue
+    # end
+    # revenue_array = merchant_revenues.sort_by {|key, value| value}.reverse
+    # merchant_ids = revenue_array[0..(x-1)].map {|merchant_rev| merchant_rev[0]}
+    # merchant_ids.map do |merchant_id|
+    #   engine.merchants.find_by_id(merchant_id)
+    # end
+    sorted_merchs = engine.merchants.all.sort_by {|merchant| merchant.revenue}
+    binding.pry
+    top_earners = sorted_merchs.last(x).reverse
+  end
+
 end

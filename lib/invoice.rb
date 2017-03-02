@@ -68,13 +68,6 @@ class Invoice
     when false
       false
     end
-    # if status == true
-    #   true
-    # elsif transactions.length == 0
-    #   false
-    # else
-    #   false
-    # end
   end
 
   def invoice_items

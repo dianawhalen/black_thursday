@@ -7,12 +7,12 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def setup
     @se = SalesEngine.from_csv({
-      # :merchants => "./data/merchants.csv",
-      # :items     => "./data/items.csv",
-      # :customers => "./data/customers.csv",
-      # :invoices  => "./data/invoices.csv",
+      :merchants => "./data/merchants.csv",
+      :items     => "./data/items.csv",
+      :customers => "./data/customers.csv",
+      :invoices  => "./data/invoices.csv",
       :invoice_items => "./test/fixtures/invoice_items_truncated.csv",
-      # :transactions  => "./data/transactions.csv"
+      :transactions  => "./data/transactions.csv"
       })
 
     @iir = @se.invoice_items

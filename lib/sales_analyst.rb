@@ -154,6 +154,10 @@ class SalesAnalyst
     end
   end
 
+  def merchants_ranked_by_revenue
+    engine.merchants.all.sort_by {|merchant| merchant.revenue}.reverse
+  end
+
   def top_revenue_earners(x=20)
     sorted_merchs = engine.merchants.all.sort_by {|merchant| merchant.revenue}
     top_earners = sorted_merchs.last(x).reverse
@@ -190,9 +194,6 @@ class SalesAnalyst
     uniq_merchant.revenue
   end
 
-  def merchants_ranked_by_revenue
-    engine.merchants.all.sort_by {|merchant| merchant.revenue}
-  end
 
   def most_sold_item_for_merchant(merchant_id)
     merchant = engine.merchants.find_by_id(merchant_id)

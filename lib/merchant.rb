@@ -39,4 +39,8 @@ class Merchant
     end
   end
 
+  # def has_pending_invoices?
+  #   invoices.any? {|invoice| !invoice.is_paid_in_full?}
+  # end
+
 end

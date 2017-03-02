@@ -135,7 +135,7 @@ class SalesAnalyst
     avg = invoices_count/7.0
     result = number_of_invoices_created_on_given_day.select do |day, count|
       day if count > (std_dev + avg)
-    end # written as a case
+    end
       result.keys
   end
 
@@ -164,11 +164,6 @@ class SalesAnalyst
   end
 
   def merchants_with_pending_invoices
-    # pending_invoices = engine.invoices.find_all_by_status(:pending)
-    # b = pending_invoices.map do |invoice|
-    #   engine.merchants.find_by_id(invoice.merchant_id)
-    # end
-    # b.uniq
     pending_merchants = engine.merchants.all.find_all do |merchant|
       merchant.invoices.any? do |invoice|
         invoice.pending?

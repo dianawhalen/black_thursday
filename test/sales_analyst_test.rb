@@ -14,15 +14,6 @@ class SalesAnalystTest < Minitest::Test
       :transactions  => "./test/fixtures/transactions_truncated.csv"
       })
 
-      # {
-      #   :merchants => "./test/fixtures/merchants_truncated_2.csv",
-      #   :items     => "./test/fixtures/items_truncated_2.csv",
-      #   :customers => "./test/fixtures/customers_truncated.csv",
-      #   :invoices  => "./test/fixtures/invoices_truncated_2.csv",
-      #   :invoice_items => "./test/fixtures/invoice_items_truncated.csv",
-      #   :transactions  => "./test/fixtures/transactions_truncated.csv"
-      #   }
-
     @sa = SalesAnalyst.new(@se)
   end
 
@@ -78,13 +69,15 @@ class SalesAnalystTest < Minitest::Test
     assert_instance_of BigDecimal, @sa.average_item_price
   end
 
+  def test_it_can_find_item_price_std_deviation
+    assert_equal 2900.98999734588, @sa.standard_deviation_item_price
+  end
+
   def test_golden_items_returns_array
     assert_instance_of Array, @sa.golden_items
   end
 
-  # iteration 2
-
-  def test_returns_corrent_invoices_count
+  def test_returns_correct_invoices_count
     assert_equal 4985, @sa.invoices_count
   end
 
@@ -107,7 +100,7 @@ class SalesAnalystTest < Minitest::Test
 
   def test_returns_array_of_bottom_performing_merchants_by_invoice_count
     assert_instance_of Array, @sa.bottom_merchants_by_invoice_count
-    assert_instance_of Merchant, @sa.bottom_merchants_by_invoice_count.first # this needs to be fixed in the fxture file
+    assert_instance_of Merchant, @sa.bottom_merchants_by_invoice_count.first
   end
 
   def test_invoice_day_created_returns_array_of_day_names
@@ -126,7 +119,7 @@ class SalesAnalystTest < Minitest::Test
 
   def test_returns_array_of_strings_for_top_performing_days
     assert_instance_of Array, @sa.top_days_by_invoice_count
-    assert_instance_of String, @sa.top_days_by_invoice_count.first # needs to be fixed in fixture
+    assert_instance_of String, @sa.top_days_by_invoice_count.first
   end
 
   def test_invoice_status_count_returns_correct_number
@@ -143,6 +136,11 @@ class SalesAnalystTest < Minitest::Test
     assert_instance_of BigDecimal, @sa.total_revenue_by_date(Time.parse("2008-08-28"))
   end
 
+  def test_it_returns_array_of_merchants_ranked_by_revenue
+    assert_instance_of Array, @sa.merchants_ranked_by_revenue
+    assert_equal 475, @sa.merchants_ranked_by_revenue.count
+  end
+
   def test_top_revenue_earners_returns_array_of_merchants
     assert_equal 20, @sa.top_revenue_earners.count
     assert_equal 15, @sa.top_revenue_earners(15).count
@@ -153,6 +151,11 @@ class SalesAnalystTest < Minitest::Test
   def test_returns_merchants_with_pending_invoices
     assert_instance_of Array, @sa.merchants_with_pending_invoices
     assert_equal 475, @sa.merchants_with_pending_invoices.count
+  end
+
+  def test_it_returns_array_of_merchants_with_only_one_item
+    assert_instance_of Array, @sa.merchants_with_only_one_item
+    assert_equal 243, @sa.merchants_with_only_one_item.count
   end
 
   def test_merchants_with_only_one_item_registered_in_month
@@ -173,6 +176,4 @@ class SalesAnalystTest < Minitest::Test
     assert_instance_of Item, @sa.best_item_for_merchant(12334141)
     assert_equal "Seer", @sa.best_item_for_merchant(12334141).name
   end
-
-
 end

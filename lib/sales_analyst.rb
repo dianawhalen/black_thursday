@@ -218,10 +218,10 @@ class SalesAnalyst
     items = inv_items.group_by {|item| item.item_id}
     summed = Hash.new(0)
     items.each do |k,v|
-      summed[k] = v.reduce(0) {|total, x| total += x.unit_price}
+      summed[k] = v.reduce(0) {|total, x| total += (x.quantity * x.unit_price)}
     end
     max = summed.values.max
-    b = summed.select {|k,v| v == max}
+    b = summed.select {|k,v| k if v == max}
     engine.items.all.find {|item| b.keys.first == item.id}
   end
 end
